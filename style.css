@@ -1,87 +1,165 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root{
+  --bg-1: #f5fbf8;
+  --card-bg: #ffffff;
+  --accent: #147b5a;
+  --accent-2: #2ecc71;
+  --muted: #6b7176;
+  --danger: #e74c3c;
+  --glass: rgba(255,255,255,0.6);
+  --radius: 12px;
+  --gap: 14px;
 }
 
-body {
-  font-family: sans-serif;
-  background-color: #f0f9f4;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* リセット */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+
+/* 全体背景 */
+body{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background: linear-gradient(180deg,var(--bg-1),#eef7f3 60%);
+  color:#222;
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom);
 }
 
-.app-container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
+/* アプリコンテナ（カード） */
+.app-container{
+  background: linear-gradient(180deg,var(--card-bg), #fbffff);
+  width:100%;
+  max-width:520px;
+  border-radius:var(--radius);
+  box-shadow: 0 8px 30px rgba(20,40,40,0.08);
+  padding:24px;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  gap:var(--gap);
 }
 
-h1 {
-  color: #2ecc71;
-  margin-bottom: 20px;
+/* ヘッダー */
+h1{
+  color:var(--accent);
+  font-size:20px;
+  margin-bottom:4px;
+  font-weight:600;
+  text-align:center;
+}
+h1 + p{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:8px;
+  text-align:center;
 }
 
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+/* 入力エリア */
+.input-container{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+input[type="text"],
+input[type="url"]{
+  width:100%;
+  padding:14px 12px;
+  border-radius:10px;
+  border:1px solid #e6ece8;
+  background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(250,250,250,0.9));
+  font-size:15px;
+  outline:none;
+  transition:box-shadow .15s ease, border-color .15s ease;
+}
+input:focus{
+  border-color:var(--accent-2);
+  box-shadow:0 6px 18px rgba(42,203,119,0.12);
 }
 
-input {
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+/* ボタン */
+button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 14px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  font-weight:600;
+  font-size:15px;
+  transition:transform .08s ease, box-shadow .12s ease, opacity .12s;
+}
+button:active{ transform:translateY(1px) }
+button:focus{ box-shadow:0 6px 18px rgba(20,120,90,0.14); outline:none }
+
+/* ブックマークリスト */
+#bookmark-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:4px;
+  padding:0;
+}
+#bookmark-list li{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px;
+  border-radius:10px;
+  background:linear-gradient(180deg,#ffffff,#fbfffe);
+  border:1px solid #eef6f1;
+  box-shadow:0 2px 8px rgba(12,30,24,0.03);
+}
+#bookmark-list a{
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:600;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:72%;
+}
+#bookmark-list .meta{
+  color:var(--muted);
+  font-size:13px;
 }
 
-button {
-  padding: 10px;
-  background-color: #2ecc71;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* Remove ボタン（一覧内） */
+#bookmark-list button{
+  background:var(--danger);
+  padding:8px 10px;
+  border-radius:8px;
+  font-weight:600;
+  font-size:13px;
+}
+#bookmark-list button:hover{ opacity:0.95 }
+
+/* モバイル向け — 全画面表示に見せる */
+@media (max-width:600px){
+  body{
+    align-items:stretch;
+    padding:0;
+  }
+  .app-container{
+    border-radius:0;
+    padding:18px;
+    min-height:calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    justify-content:flex-start;
+  }
+  h1{ font-size:18px; text-align:center }
+  input[type="text"], input[type="url"]{ padding:16px; font-size:16px }
+  button{ width:100%; padding:14px; font-size:16px }
+  #bookmark-list a{ max-width:60% }
 }
 
-button:hover {
-  background-color: #27ae60;
-}
-
-#bookmark-list {
-  list-style: none;
-  padding: 0;
-}
-
-#bookmark-list li {
-  background-color: #f9f9f9;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#bookmark-list a {
-  color: #2ecc71;
-  text-decoration: none;
-}
-
-#bookmark-list button {
-  background-color: #e74c3c;
-  padding: 5px 10px;
-}
-
-#bookmark-list button:hover {
-  background-color: #c0392b;
+/* 大画面微調整 */
+@media (min-width:900px){
+  .app-container{ padding:28px }
 }
