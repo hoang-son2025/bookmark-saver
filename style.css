@@ -155,8 +155,23 @@ button:focus{ box-shadow:0 6px 18px rgba(20,120,90,0.14); outline:none }
   }
   h1{ font-size:18px; text-align:center }
   input[type="text"], input[type="url"]{ padding:16px; font-size:16px }
-  button{ width:100%; padding:14px; font-size:16px }
+
+  /* 追加ボタンだけを全幅にする（Remove等の一覧内ボタンは幅を自動に） */
+  #add-bookmark{ width:100%; padding:14px; font-size:16px }
+
+  /* リスト内のアイテム調整 */
+  #bookmark-list{ gap:12px }
+  #bookmark-list li{ align-items:center }
   #bookmark-list a{ max-width:60% }
+
+  /* Remove ボタン等は自動幅にし、最小幅を確保 */
+  #bookmark-list button{
+    width:auto;
+    flex:0 0 auto;
+    padding:8px 12px;
+    min-width:88px;
+    font-size:13px;
+  }
 }
 
 /* 大画面微調整 */
